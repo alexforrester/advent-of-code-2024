@@ -1,21 +1,52 @@
+import kotlin.math.abs
+
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
-    }
 
-    fun part2(input: List<String>): Int {
-        return input.size
-    }
-
-    // Test if implementation meets criteria from the description, like:
-    check(part1(listOf("test_input")) == 1)
-
-    // Or read a large test input from the `src/Day01_test.txt` file:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
-    // Read the input from the `src/Day01.txt` file.
+    //val input = readInput("Day01_test")
     val input = readInput("Day01")
-    part1(input).println()
-    part2(input).println()
+    input.println()
+
+    val locationSize = input.size
+
+    val locationIds =
+        input.map { it.substringBefore(" ").toInt() }.toMutableList().also { it.println() }
+    val locations =
+        input.map { it.substringAfter(" ").trim().toInt() }.toMutableList().also { it.println() }
+
+    var part1Total = 0
+
+    for (line in 0 until locationSize) {
+
+        val smallestLocationId = locationIds.min()
+        val smallestLocation = locations.min()
+
+        val difference = abs(smallestLocationId - smallestLocation)
+
+        part1Total += difference
+
+        locationIds.remove(smallestLocationId)
+        locations.remove(smallestLocation)
+    }
+
+    "Total $part1Total".println()
+
+    var part2Total = 0
+
+    val locationIdsPart2 =
+        input.map { it.substringBefore(" ").toInt() }.toMutableList().also { it.println() }
+    val locationsPart2 =
+        input.map { it.substringAfter(" ").trim().toInt() }.toMutableList().also { it.println() }
+
+    locationIdsPart2.forEach { locationId ->
+
+        val countLocationIds = locationsPart2.count { it == locationId }
+
+        val simlarityScore = locationId * countLocationIds
+
+        part2Total += simlarityScore
+
+    }
+
+    "Total $part2Total".println()
+
 }
