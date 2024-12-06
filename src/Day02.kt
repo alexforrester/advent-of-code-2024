@@ -2,7 +2,6 @@ import kotlin.math.abs
 
 fun main() {
 
-    //val input = readInput("Day02_test")
     val input = readInput("Day02")
 
     val locationSize = input.size
